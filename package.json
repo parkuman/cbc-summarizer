@@ -16,6 +16,7 @@
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.5.0",
+		"@types/jsdom": "^21.1.0",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"eslint": "^8.28.0",
@@ -31,6 +32,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"cohere-ai": "^5.1.0"
+		"cohere-ai": "^5.1.0",
+		"jsdom": "^21.1.0"
 	}
 }
