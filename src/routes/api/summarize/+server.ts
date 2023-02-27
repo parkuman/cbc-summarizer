@@ -14,9 +14,11 @@ if (!SECRET_COHERE_API_KEY) {
 
 type SummaryRequestBody = {
 	url: string;
-	temperature: string;
-	extractiveness: string;
-	format: string;
+	summaryTemperature: string;
+	summaryExtractiveness: string;
+	summaryFormat: string;
+	summaryLength: string;
+	summaryAdditionalCommand: string;
 };
 
 // initalize Jsdom and cohere SDK
@@ -26,14 +28,59 @@ cohere.init(SECRET_COHERE_API_KEY);
 export const POST: RequestHandler<SummaryRequestBody> = async ({ request }: RequestEvent) => {
 	const body = (await request.json()) as SummaryRequestBody;
 
-	if (!body.url) {
+	// ===============| BODY VALIDATION |================
+	if (
+		!body.url ||
+		!body.summaryTemperature ||
+		!body.summaryExtractiveness ||
+		!body.summaryFormat ||
+		!body.summaryLength
+	) {
 		throw error(400, {
-			message: "Body must include url"
+			message:
+				"Body must include url, summaryTemperature, summaryExtractiveness, summaryFormat, and summaryLength"
 		});
 	}
 
-	const { url } = body;
+	const { url, summaryTemperature, summaryExtractiveness, summaryFormat, summaryLength } = body;
 
+	// didn't want to bother over-checking this url since cbc has some mobile sites and such that are also valid
+	if (!url.includes("cbc.ca")) {
+		throw error(400, {
+			message: "URL is not a valid cbc.ca article"
+		});
+	}
+
+	if (
+		summaryExtractiveness !== "LOW" &&
+		summaryExtractiveness !== "MEDIUM" &&
+		summaryExtractiveness !== "HIGH"
+	) {
+		throw error(400, {
+			message: "summaryExtractiveness must be 'LOW', 'MEDIUM' or 'HIGH'"
+		});
+	}
+
+	if (summaryLength !== "SHORT" && summaryLength !== "MEDIUM" && summaryLength !== "LONG") {
+		throw error(400, {
+			message: "summaryLength must be 'SHORT', 'MEDIUM' or 'LONG'"
+		});
+	}
+
+	if (summaryFormat !== "BULLETS" && summaryFormat !== "PARAGRAPH") {
+		throw error(400, {
+			message: "summaryFormat must be either 'BULLETS' or 'PARAGRAPH'"
+		});
+	}
+
+	const summaryTemperatureNum = parseFloat(summaryTemperature);
+	if (summaryTemperatureNum < 0 || summaryTemperatureNum > 5) {
+		throw error(400, {
+			message: "summaryTemperature must be a number between 0 and 5"
+		});
+	}
+
+	// ===============| SUMMARIZE |================
 	try {
 		const webpageResponse = await fetch(url, {
 			method: "GET"
@@ -50,19 +97,20 @@ export const POST: RequestHandler<SummaryRequestBody> = async ({ request }: Requ
 		webpageDom.window.document.querySelectorAll(".mediaEmbed").forEach((e) => e.remove());
 		const articleEl = webpageDom.window.document.querySelector(".story") as HTMLDivElement;
 
-		// TODO: temperature so its not random and more subjective
 		const summaryResponse = await cohere.summarize({
 			text: articleEl.textContent as string,
-			temperature: 0.1,
-			extractiveness: "LOW",
-			format: "BULLETS"
+			temperature: summaryTemperature,
+			extractiveness: summaryExtractiveness,
+			format: summaryFormat,
+			length: summaryLength,
+			additional_command: body.summaryAdditionalCommand ?? null // if no additional command passed, just pass null
 		});
 
 		const summary = summaryResponse.body.summary;
-		const splitPoints = summary.split("\n- "); 					// split the points up by '\n- ', this should 
-																												// ensure we don't accidentaly split it some other way
-																												
-		splitPoints[0] = splitPoints[0].replace("- ", ""); 	// replace the initial bullet point too
+		const splitPoints = summary.split("\n- "); // split the points up by '\n- ', this should
+		// ensure we don't accidentaly split it some other way
+
+		splitPoints[0] = splitPoints[0].replace("- ", ""); // replace the initial bullet point too
 
 		return json(splitPoints);
 	} catch (err) {
