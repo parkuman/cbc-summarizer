@@ -5,6 +5,10 @@
 	let loading = false;
 	let error = "";
 
+	// extract the current URL after http(s):// and before the first slash to display in the hint
+	let baseUrl: string = $page.url.toString().substring($page.url.toString().indexOf(":") + 3);
+	baseUrl = baseUrl.substring(0, baseUrl.indexOf("/"));
+
 	let advancedOptions = false;
 	let url = "";
 	let summaryLength = "MEDIUM";
@@ -54,10 +58,6 @@
 		});
 	}
 
-	// extract the current URL after http(s):// and before the first slash
-	let baseUrl: string = $page.url.toString().substring($page.url.toString().indexOf(":") + 3);
-	baseUrl = baseUrl.substring(0, baseUrl.indexOf("/"));
-
 	// on page load, set the url state variable to the slug plus cbc pre (only if there is a url provided)
 	url = $page.params.slug !== "" ? "https://www.cbc.ca/" + $page.params.slug : "";
 </script>
@@ -67,8 +67,8 @@
 </h1>
 <sub id="urlTip">
 	<div>i</div>
-	On any CBC article you can replace "www.cbc.ca" with "{baseUrl}" in your browser's search bar for a quick way
-	to summarize the article you're reading!
+	On any CBC article you can replace "www.cbc.ca" with "{baseUrl}" in your browser's search bar for
+	a quick way to summarize the article you're reading!
 </sub>
 <h2>
 	Paste the link of any <span style:color="var(--colour-primary)">CBC news</span> article below:
@@ -91,7 +91,7 @@
 			These are custom options passed to
 			<a href="https://docs.cohere.ai/reference/summarize-2" target="_blank" rel="noreferrer"
 				>Cohere's Summarize API</a
-			>
+			> which is currently (Feb 2023) still in beta.
 		</p>
 		<!-- length -->
 		<div>
