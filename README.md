@@ -8,8 +8,7 @@
     <a target="_blank" rel="noopener noreferrer" href="TODO">Website</a>
   </h3>
 
-<video src="static/demo.webm" height=300 />
-  <!-- <img src="static/screenshot.jpg" alt="screenshot"> -->
+[demo.webm](https://user-images.githubusercontent.com/44420929/221619290-383c9444-2590-47b6-8cc4-ec8c80b751c7.webm)
 
 </div>
 
