@@ -1,6 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { expect, test } from "@playwright/test";
 
-test('index page has expected h1', async ({ page }) => {
-	await page.goto('/');
-	await expect(page.getByRole('heading', { name: 'Welcome to SvelteKit' })).toBeVisible();
+test("autofills url using browser slug", async ({ page }) => {
+	const url = "/news/world/russia-sanctions-compliance-experts-1.6759244";
+	await page.goto(url);
+	await expect(page.getByTestId("url-input")).toHaveValue("https://www.cbc.ca/" + url);
 });

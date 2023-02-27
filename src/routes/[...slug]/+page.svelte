@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/stores";
+	// TODO: svelte head
 
 	let summary = "";
 	let loading = false;
@@ -43,6 +44,15 @@
 		}
 
 		loading = false;
+
+		// on next frame (after state update), scroll to the output
+		requestAnimationFrame(() => {
+			const output = document.querySelector(".output");
+			if (!output) return;
+			output.scrollIntoView({
+				behavior: "smooth"
+			});
+		});
 	}
 
 	// on page load, set the url state variable to the slug provided
@@ -61,7 +71,7 @@
 	Paste the link of any <span style:color="var(--colour-primary)">CBC news</span> article below:
 </h2>
 
-<input id="url" type="url" bind:value={url} />
+<input data-testid="url-input" id="url" type="url" bind:value={url} />
 
 <!-- advanced options -->
 <button
@@ -139,13 +149,13 @@
 	</div>
 {/if}
 
-<button type="submit" id="submit" on:click={summarize}
+<button data-testid="submit-btn" type="submit" id="submit" on:click={summarize}
 	>{loading ? "Summarizing..." : "Summarize!"}</button
 >
 
 {#if error}
 	<hr />
-	<div style:text-align="center">
+	<div class="output" style:text-align="center">
 		<h2>Error</h2>
 		<p>{error}</p>
 	</div>
@@ -154,7 +164,7 @@
 {#if summary}
 	<hr />
 
-	<h1 id="summary">Summary</h1>
+	<h1 class="output" id="summary">Summary</h1>
 	<ul>
 		{#each summary as summaryPt}
 			<li>
@@ -222,7 +232,6 @@
 		background-color: rgba(var(--colour-primary-rgb), 0.4);
 		max-width: 90%;
 		font-size: 0.8rem;
-
 	}
 
 	/* info icon */
@@ -286,7 +295,7 @@
 	@media screen and (max-width: 992px) {
 		#title {
 			font-size: 2rem;
-			margin-top: 50px
+			margin-top: 50px;
 		}
 	}
 </style>

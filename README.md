@@ -1,38 +1,27 @@
-# create-svelte
+<div align="center">
+  <h1>🍁 CBC Article Summarizer 📰</h1>
+  <p>
+    <strong>Summarize any CBC article using <a href="https://cohere.ai/" target="_blank" rel="noreferrer">cohere.ai's summarize API</a></strong>
+  </p>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+   <h3>
+    <a target="_blank" rel="noopener noreferrer" href="TODO">Website</a>
+  </h3>
 
-## Creating a project
+<video src="static/demo.webm" height=300 />
+  <!-- <img src="static/screenshot.jpg" alt="screenshot"> -->
 
-If you're seeing this, you've probably already done this step. Congrats!
+</div>
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Explanation
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+#
 
-## Developing
+This webapp takes the CBC.ca url and fetches fetches the article's text content in a GET request. After filtering out some common filler DOM elements in those articles, it then feeds the article content into Cohere's summarize API (currently in beta) and outputs the response to the user!
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+## Run it Yourself
+# 
+To run this on your machine:
+1. clone the repo
+2. create a `.env` file in the root directory of the project
+3. following make your `.env` file look like `.env.example`, then you can paste in your own Cohere API key
