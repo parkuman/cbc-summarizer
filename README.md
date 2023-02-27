@@ -5,7 +5,7 @@
   </p>
 
    <h3>
-    <a target="_blank" rel="noopener noreferrer" href="https://prowe-article-summarizer.netlify.app">Website</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://prowe-cbc-summarizer.netlify.app">Website</a>
   </h3>
 
 [demo.webm](https://user-images.githubusercontent.com/44420929/221619290-383c9444-2590-47b6-8cc4-ec8c80b751c7.webm)
