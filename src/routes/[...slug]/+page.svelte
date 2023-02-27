@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	// TODO: svelte head
 
 	let summary = "";
 	let loading = false;
@@ -55,8 +54,8 @@
 		});
 	}
 
-	// on page load, set the url state variable to the slug provided
-	url = "https://www.cbc.ca/" + $page.params.slug;
+	// on page load, set the url state variable to the slug plus cbc pre (only if there is a url provided)
+	url = $page.params.slug !== "" ? "https://www.cbc.ca/" + $page.params.slug : "";
 </script>
 
 <h1 id="title">
@@ -64,8 +63,11 @@
 </h1>
 <sub id="urlTip">
 	<div>i</div>
-	On any CBC article you can replace "www.cbc.ca" with "article-summarizer.prowe.ca" in your browser's
-	search bar for a quick way to summarize the article you're reading!
+	On any CBC article you can replace "www.cbc.ca" with "{$page.url
+		.toString()
+		.substring($page.url.toString().indexOf(":") + 3)
+		.slice(0, -1)}" in your browser's search bar for a quick way to summarize the article you're
+	reading!
 </sub>
 <h2>
 	Paste the link of any <span style:color="var(--colour-primary)">CBC news</span> article below:
