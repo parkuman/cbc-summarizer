@@ -6,8 +6,8 @@
 <svelte:head>
 	<title>CBC Article Summarizer</title>
 	<meta name="description" content="Summarize any CBC article using cohere.ai's summarize API" />
-	<meta property="og:url" content="https://prowe-article-summarizer.netlify.app/" />
-	<link rel="canonical" href="https://prowe-article-summarizer.netlify.app/" />
+	<meta property="og:url" content="https://prowe-cbc-summarizer.netlify.app/" />
+	<link rel="canonical" href="https://prowe-cbc-summarizer.netlify.app/" />
 	<meta property="og:site_name" content="CBC Article Summarizer" />
 	<meta property="og:description" content="Summarize any CBC article using cohere.ai's summarize API" />
 	<meta property="og:title" content="CBC Article Summarizer" />
@@ -28,7 +28,7 @@
 			<a rel="noreferrer" target="_blank" href="https://www.netlify.com/">Netlify</a>
 		</p>
 		<p>
-			<a rel="noreferrer" target="_blank" href="https://github.com/parkuman/article-summarizer"
+			<a rel="noreferrer" target="_blank" href="https://github.com/parkuman/cbc-summarizer"
 				>View the source on Github</a
 			>
 		</p>

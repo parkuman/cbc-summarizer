@@ -1,5 +1,5 @@
 {
-	"name": "article-summarizer",
+	"name": "cbc-summarizer",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
