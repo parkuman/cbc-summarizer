@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/stores";
+	import { PUBLIC_BASE_URL } from "$env/static/public";
 
 	let summary = "";
 	let loading = false;
@@ -23,7 +24,7 @@
 		error = "";
 		loading = true;
 
-		const summaryRes = await fetch("/api/summarize", {
+		const summaryRes = await fetch(`${PUBLIC_BASE_URL}/api/summarize`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json"

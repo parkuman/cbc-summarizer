@@ -112,7 +112,9 @@ export const POST: RequestHandler<SummaryRequestBody> = async ({ request }: Requ
 
 		splitPoints[0] = splitPoints[0].replace("- ", ""); // replace the initial bullet point too
 
-		return json(splitPoints);
+		const response = json(splitPoints);
+  	response.headers.append('Access-Control-Allow-Origin', "*");
+  	return response;
 	} catch (err) {
 		console.error("issues fetching article content");
 		throw error(400, {
