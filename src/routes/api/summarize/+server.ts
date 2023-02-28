@@ -99,7 +99,7 @@ export const POST: RequestHandler<SummaryRequestBody> = async ({ request }: Requ
 
 		const summaryResponse = await cohere.summarize({
 			text: articleEl.textContent as string,
-			temperature: summaryTemperature,
+			temperature: summaryTemperatureNum,
 			extractiveness: summaryExtractiveness,
 			format: summaryFormat,
 			length: summaryLength,
