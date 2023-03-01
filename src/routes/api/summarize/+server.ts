@@ -31,7 +31,7 @@ export const POST: RequestHandler<SummaryRequestBody> = async ({ request }: Requ
 	// ===============| BODY VALIDATION |================
 	if (
 		!body.url ||
-		!body.summaryTemperature ||
+		body.summaryTemperature === "" ||
 		!body.summaryExtractiveness ||
 		!body.summaryFormat ||
 		!body.summaryLength
